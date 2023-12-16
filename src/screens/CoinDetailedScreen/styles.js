@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   currentPrice: {
     color: "white",
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "600",
     letterSpacing: 1,
   },
@@ -21,6 +21,17 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 17,
     fontWeight: "500",
+  },
+  input: {
+    flex: 1,
+    width: 130,
+    height: 40,
+    margin: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "white",
+    padding: 10,
+    fontSize: 16,
+    color: "white",
   },
 });
 
