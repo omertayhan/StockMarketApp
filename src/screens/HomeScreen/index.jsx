@@ -13,14 +13,16 @@ const HomeScreen = () => {
     }
     setLoading(true);
     const coinsData = await getMarketData(pageNumber);
-    setCoins(coinsData);
+    if (coinsData) {
+      setCoins((existingCoins) => [...existingCoins, ...coinsData]);
+    }
     setLoading(false);
   };
 
-  const reFetchCoins = async () => {
+  const refetchCoins = async () => {
     setLoading(true);
     const coinsData = await getMarketData();
-    setCoins((existingCoins) => [...existingCoins, ...coinsData]); // birden fazla array olusturulmuyor tek bir array içerisine yeni gelen veriler aktarılmıs oluyor 3 nokta ile
+    setCoins(coinsData);
     setLoading(false);
   };
 
@@ -36,7 +38,7 @@ const HomeScreen = () => {
         <RefreshControl
           refreshing={loading}
           tintColor={"white"}
-          onRefresh={reFetchCoins}
+          onRefresh={refetchCoins}
         />
       }
     />
