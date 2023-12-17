@@ -1,32 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Dimensions, TextInput } from "react-native";
-import Coin from "../../../assets/data/crypto.json";
+import {
+  View,
+  Text,
+  Dimensions,
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
 import CoinDetailedHeader from "./comnponents/CoinDetailedHeader";
 import { AntDesign } from "@expo/vector-icons";
-import { LineChart, CandlestickChart } from "react-native-wagmi-charts";
+import { LineChart } from "react-native-wagmi-charts";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useRoute } from "@react-navigation/native";
+import {
+  getDetailedCoinData,
+  getCoinMarketChart,
+} from "../../services/requests";
 
 import styles from "./styles";
 
 const CoinDetailedScreen = () => {
+  const [coin, setCoin] = useState(null);
+  const [coinMarketData, setCoinMarketData] = useState(null);
+  const route = useRoute();
+  const {
+    params: { coinId },
+  } = route;
+
+  const [loading, setLoading] = useState(false);
+  const [coinValue, setCoinValue] = useState("1");
+  const [usdValue, setUsdValue] = useState("");
+
+  const fetchCoinData = async () => {
+    setLoading(true);
+    const fetchedCoinData = await getDetailedCoinData(coinId);
+    const fetchedCoinMarketData = await getCoinMarketChart(coinId);
+    setCoin(fetchedCoinData);
+    setCoinMarketData(fetchedCoinMarketData);
+    setUsdValue(fetchedCoinData.market_data.current_price.usd.toString());
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCoinData();
+  }, []);
+
+  if (loading || !coin || !coinMarketData) {
+    return <ActivityIndicator size={"large"} />;
+  }
+
   const {
     image: { small },
     name,
     symbol,
-    prices,
     market_data: {
       market_cap_rank,
       current_price,
       price_change_percentage_24h,
     },
-  } = Coin;
-
-  const [coinValue, setCoinValue] = useState("1");
-  const [usdValue, setUsdValue] = useState(current_price.usd.toString());
+  } = coin;
+  const { prices } = coinMarketData;
 
   const percentageColor =
-    price_change_percentage_24h < 0 ? "#ea3943" : "#16c784";
-
+    price_change_percentage_24h < 0 ? "#ea3943" : "#16c784" || "white";
   const screenWidth = Dimensions.get("window").width;
 
   const formatCurrency = ({ value }) => {
@@ -97,7 +132,6 @@ const CoinDetailedScreen = () => {
           <LineChart height={screenWidth / 2} width={screenWidth * 0.9}>
             <LineChart.Path color={percentageColor} />
             <LineChart.CursorCrosshair color={"red"}>
-              {/* <LineChart.Tooltip textStyle={{ color: "white" }} /> */}
               <LineChart.Tooltip position="bottom" color={"white"}>
                 <LineChart.DatetimeText style={{ color: "white" }} />
               </LineChart.Tooltip>
