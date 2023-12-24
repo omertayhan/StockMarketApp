@@ -8,16 +8,17 @@ import { useWatchlist } from "../../../../contexts/WatchlistContext";
 const CoinDetailedHeader = (props) => {
   const { coinId, image, symbol, marketCapRank } = props;
   const navigation = useNavigation();
-  const { watchlistCoinIds, storeWatchlistCoinId, removeWatchlistCoinId } = useWatchlist();
+  const { watchlistCoinIds, storeWatchlistCoinId, removeWatchlistCoinId } =
+    useWatchlist();
 
   const checkIfCoinIsWatchlisted = () =>
     watchlistCoinIds.some((coinIdValue) => coinIdValue === coinId);
 
   const handleWatchlistCoin = () => {
     if (checkIfCoinIsWatchlisted()) {
-      return removeWatchlistCoinId(coinId)
+      return removeWatchlistCoinId(coinId);
     }
-    return storeWatchlistCoinId(coinId)
+    return storeWatchlistCoinId(coinId);
   };
 
   return (
