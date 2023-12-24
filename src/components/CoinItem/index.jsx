@@ -18,6 +18,11 @@ const CoinItem = ({ marketCoin }) => {
 
   const navigation = useNavigation();
 
+  const formattedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(current_price);
+
   const percentageColor =
     price_change_percentage_24h < 0 ? "#ea3943" : "#16c784";
 
@@ -66,7 +71,7 @@ const CoinItem = ({ marketCoin }) => {
         </View>
       </View>
       <View style={{ marginLeft: "auto", alignItems: "flex-end" }}>
-        <Text style={styles.title}>${current_price}</Text>
+        <Text style={styles.title}>{formattedPrice}</Text>
         <Text style={{ color: "white" }}>
           MGap {normalizeMarketCap(market_cap)}
         </Text>
