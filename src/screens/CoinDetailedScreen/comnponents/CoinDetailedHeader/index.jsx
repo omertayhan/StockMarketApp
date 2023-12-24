@@ -6,20 +6,18 @@ import { useNavigation } from "@react-navigation/native";
 import { useWatchlist } from "../../../../contexts/WatchlistContext";
 
 const CoinDetailedHeader = (props) => {
-  const { coinId, image, symbol, market_cap_rank } = props;
+  const { coinId, image, symbol, marketCapRank } = props;
   const navigation = useNavigation();
-  const { watchlistCoinIds, storeWatchlistCoinId, removeWatchlistCoinId } =
-    useWatchlist();
+  const { watchlistCoinIds, storeWatchlistCoinId, removeWatchlistCoinId } = useWatchlist();
 
-  const checkIfCoinIsWatchedListed = () => {
-    return watchlistCoinIds.some((coinIdValue) => coinIdValue === coinId);
-  };
+  const checkIfCoinIsWatchlisted = () =>
+    watchlistCoinIds.some((coinIdValue) => coinIdValue === coinId);
 
-  const handleWatchListCoin = () => { 
-    if (checkIfCoinIsWatchedListed()) {
-      return removeWatchlistCoinId(coinId);
+  const handleWatchlistCoin = () => {
+    if (checkIfCoinIsWatchlisted()) {
+      return removeWatchlistCoinId(coinId)
     }
-    return storeWatchlistCoinId(coinId);
+    return storeWatchlistCoinId(coinId)
   };
 
   return (
@@ -34,14 +32,16 @@ const CoinDetailedHeader = (props) => {
         <Image source={{ uri: image }} style={{ width: 25, height: 25 }} />
         <Text style={styles.tickerTitle}>{symbol.toUpperCase()}</Text>
         <View style={styles.rankContainer}>
-          <Text style={styles.rankText}>#{market_cap_rank}</Text>
+          <Text style={{ color: "white", fontWeight: "bold", fontSize: 15 }}>
+            #{marketCapRank}
+          </Text>
         </View>
       </View>
       <FontAwesome
-        name={checkIfCoinIsWatchedListed() ? "star" : "star-o"}
-        size={30}
-        color={checkIfCoinIsWatchedListed() ? "#FFBF00" : "white"}
-        onPress={handleWatchListCoin}
+        name={checkIfCoinIsWatchlisted() ? "star" : "star-o"}
+        size={25}
+        color={checkIfCoinIsWatchlisted() ? "#FFBF00" : "white"}
+        onPress={handleWatchlistCoin}
       />
     </View>
   );
