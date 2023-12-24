@@ -49,6 +49,7 @@ const CoinDetailedScreen = () => {
   }
 
   const {
+    id,
     image: { small },
     name,
     symbol,
@@ -97,6 +98,7 @@ const CoinDetailedScreen = () => {
           data={prices.map(([timestamp, value]) => ({ timestamp, value }))}
         >
           <CoinDetailedHeader
+            coinId={id}
             image={small}
             symbol={symbol}
             market_cap_rank={market_cap_rank}
