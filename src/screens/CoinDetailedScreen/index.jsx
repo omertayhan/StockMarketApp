@@ -6,7 +6,7 @@ import {
   TextInput,
   ActivityIndicator,
 } from "react-native";
-import CoinDetailedHeader from "./comnponents/CoinDetailedHeader";
+import CoinDetailedHeader from "../CoinDetailedScreen/components/CoinDetailedHeader";
 import { AntDesign } from "@expo/vector-icons";
 import { LineChart } from "react-native-wagmi-charts";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
