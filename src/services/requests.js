@@ -43,7 +43,16 @@ export const getWatchlistedCoins = async (pageNumber = 1, coinIds) => {
     return response.data;
   } catch (e) {
     console.log(e);
-    throw e; // Hata durumunu tekrar fırlatmak hatayı yukarıya iletecek
   }
 };
 
+export const getAllCoins = async () => {
+  try {
+    const response = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/list`
+    );
+    return response.data;
+  } catch (e) {
+    console.error(e);
+  }
+};

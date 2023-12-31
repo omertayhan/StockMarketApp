@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { FlatList, RefreshControl, View, Text } from "react-native";
 import CoinItem from "../../components/CoinItem";
-import { FlatList, RefreshControl } from "react-native";
 import { getMarketData } from "../../services/requests";
 
 const HomeScreen = () => {
@@ -13,13 +13,14 @@ const HomeScreen = () => {
     }
     setLoading(true);
     const coinsData = await getMarketData(pageNumber);
-    if (coinsData) {
-      setCoins((existingCoins) => [...existingCoins, ...coinsData]);
-    }
+    setCoins((existingCoins) => [...existingCoins, ...coinsData]);
     setLoading(false);
   };
 
   const refetchCoins = async () => {
+    if (loading) {
+      return;
+    }
     setLoading(true);
     const coinsData = await getMarketData();
     setCoins(coinsData);
@@ -29,19 +30,47 @@ const HomeScreen = () => {
   useEffect(() => {
     fetchCoins();
   }, []);
+
   return (
-    <FlatList
-      data={coins}
-      renderItem={({ item }) => <CoinItem marketCoin={item} />}
-      onEndReached={() => fetchCoins(coins.length / 50 + 1)}
-      refreshControl={
-        <RefreshControl
-          refreshing={loading}
-          tintColor={"white"}
-          onRefresh={refetchCoins}
-        />
-      }
-    />
+    <View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "DroidSans",
+            color: "white",
+            fontSize: 25,
+            letterSpacing: 1,
+            paddingHorizontal: 20,
+            paddingBottom: 5,
+          }}
+        >
+          Cryptoassets
+        </Text>
+        <Text
+          style={{ color: "lightgrey", fontSize: 12, paddingHorizontal: 10 }}
+        >
+          Powered by CoinGecko
+        </Text>
+      </View>
+      <FlatList
+        data={coins}
+        renderItem={({ item }) => <CoinItem marketCoin={item} />}
+        onEndReached={() => fetchCoins(coins.length / 50 + 1)}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            tintColor="white"
+            onRefresh={refetchCoins}
+          />
+        }
+      />
+    </View>
   );
 };
 
