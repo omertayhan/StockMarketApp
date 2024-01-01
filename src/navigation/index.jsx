@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CoinDetailedScreen from "../screens/CoinDetailedScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import AddNewAssetScreen from "../screens/AddNewAssetScreen";
-
+import SignUpScreen from "../screens/SignUpScreen";
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -32,6 +32,11 @@ const Navigation = () => {
             fontWeight: "bold",
           },
         }}
+      />
+      <Stack.Screen
+        name="SignUpScreen"
+        component={SignUpScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
