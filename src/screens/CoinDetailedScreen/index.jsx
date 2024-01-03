@@ -18,6 +18,7 @@ import {
 } from "../../services/requests";
 import FilterComponent from "./components/FilterComponent";
 import { MaterialIcons } from "@expo/vector-icons";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const filterDaysArray = [
   { filterDay: "1", filterText: "24h" },
@@ -134,153 +135,155 @@ const CoinDetailedScreen = () => {
 
   return (
     <View style={{ paddingHorizontal: 10 }}>
-      <LineChart.Provider
-        data={prices.map(([timestamp, value]) => ({ timestamp, value }))}
-      >
-        <CoinDetailedHeader
-          coinId={id}
-          image={small}
-          symbol={symbol}
-          marketCapRank={market_cap_rank}
-        />
-        <View style={styles.priceContainer}>
-          <View>
-            <Text style={styles.name}>{name}</Text>
-            <LineChart.PriceText
-              format={formatCurrency}
-              style={styles.currentPrice}
-            />
-          </View>
-          <View
-            style={{
-              backgroundColor: percentageColor,
-              paddingHorizontal: 3,
-              paddingVertical: 8,
-              borderRadius: 5,
-              flexDirection: "row",
-            }}
-          >
-            <AntDesign
-              name={price_change_percentage_24h < 0 ? "caretdown" : "caretup"}
-              size={12}
-              color={"white"}
-              style={{ alignSelf: "center", marginRight: 5 }}
-            />
-            <Text style={styles.priceChange}>
-              {price_change_percentage_24h?.toFixed(2)}%
-            </Text>
-          </View>
-        </View>
-        <View style={styles.filtersContainer}>
-          {filterDaysArray.map((day) => (
-            <FilterComponent
-              filterDay={day.filterDay}
-              filterText={day.filterText}
-              selectedRange={selectedRange}
-              setSelectedRange={memoOnSelectedRangeChange}
-              key={day.filterText}
-            />
-          ))}
-          {isCandleChartVisible ? (
-            <MaterialIcons
-              name="show-chart"
-              size={24}
-              color="#16c784"
-              onPress={() => setIsCandleChartVisible(false)}
-            />
-          ) : (
-            <MaterialIcons
-              name="waterfall-chart"
-              size={24}
-              color="#16c784"
-              onPress={() => setIsCandleChartVisible(true)}
-            />
-          )}
-        </View>
-
-        {isCandleChartVisible ? (
-          <CandlestickChart.Provider
-            data={coinCandleChartData.map(
-              ([timestamp, open, high, low, close]) => ({
-                timestamp,
-                open,
-                high,
-                low,
-                close,
-              })
-            )}
-          >
-            <CandlestickChart height={screenWidth / 2} width={screenWidth}>
-              <CandlestickChart.Candles />
-              <CandlestickChart.Crosshair>
-                <CandlestickChart.Tooltip />
-              </CandlestickChart.Crosshair>
-            </CandlestickChart>
-            <View style={styles.candleStickDataContainer}>
-              <View>
-                <Text style={styles.candleStickTextLabel}>Open</Text>
-                <CandlestickChart.PriceText
-                  style={styles.candleStickText}
-                  type="open"
-                />
-              </View>
-              <View>
-                <Text style={styles.candleStickTextLabel}>High</Text>
-                <CandlestickChart.PriceText
-                  style={styles.candleStickText}
-                  type="high"
-                />
-              </View>
-              <View>
-                <Text style={styles.candleStickTextLabel}>Low</Text>
-                <CandlestickChart.PriceText
-                  style={styles.candleStickText}
-                  type="low"
-                />
-              </View>
-              <View>
-                <Text style={styles.candleStickTextLabel}>Close</Text>
-                <CandlestickChart.PriceText
-                  style={styles.candleStickText}
-                  type="close"
-                />
-              </View>
+      <GestureHandlerRootView>
+        <LineChart.Provider
+          data={prices.map(([timestamp, value]) => ({ timestamp, value }))}
+        >
+          <CoinDetailedHeader
+            coinId={id}
+            image={small}
+            symbol={symbol}
+            marketCapRank={market_cap_rank}
+          />
+          <View style={styles.priceContainer}>
+            <View>
+              <Text style={styles.name}>{name}</Text>
+              <LineChart.PriceText
+                format={formatCurrency}
+                style={styles.currentPrice}
+              />
             </View>
-            <CandlestickChart.DatetimeText
-              style={{ color: "white", fontWeight: "700", margin: 10 }}
-            />
-          </CandlestickChart.Provider>
-        ) : (
-          <LineChart height={screenWidth / 2} width={screenWidth}>
-            <LineChart.Path color={chartColor} />
-            <LineChart.CursorCrosshair color={chartColor} />
-          </LineChart>
-        )}
-
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ flexDirection: "row", flex: 1 }}>
-            <Text style={{ color: "white", alignSelf: "center" }}>
-              {symbol.toUpperCase()}
-            </Text>
-            <TextInput
-              style={styles.input}
-              value={coinValue}
-              keyboardType="numeric"
-              onChangeText={changeCoinValue}
-            />
+            <View
+              style={{
+                backgroundColor: percentageColor,
+                paddingHorizontal: 3,
+                paddingVertical: 8,
+                borderRadius: 5,
+                flexDirection: "row",
+              }}
+            >
+              <AntDesign
+                name={price_change_percentage_24h < 0 ? "caretdown" : "caretup"}
+                size={12}
+                color={"white"}
+                style={{ alignSelf: "center", marginRight: 5 }}
+              />
+              <Text style={styles.priceChange}>
+                {price_change_percentage_24h?.toFixed(2)}%
+              </Text>
+            </View>
+          </View>
+          <View style={styles.filtersContainer}>
+            {filterDaysArray.map((day) => (
+              <FilterComponent
+                filterDay={day.filterDay}
+                filterText={day.filterText}
+                selectedRange={selectedRange}
+                setSelectedRange={memoOnSelectedRangeChange}
+                key={day.filterText}
+              />
+            ))}
+            {isCandleChartVisible ? (
+              <MaterialIcons
+                name="show-chart"
+                size={24}
+                color="#16c784"
+                onPress={() => setIsCandleChartVisible(false)}
+              />
+            ) : (
+              <MaterialIcons
+                name="waterfall-chart"
+                size={24}
+                color="#16c784"
+                onPress={() => setIsCandleChartVisible(true)}
+              />
+            )}
           </View>
 
-          <View style={{ flexDirection: "row", flex: 1 }}>
-            <Text style={{ color: "white", alignSelf: "center" }}>USD</Text>
-            <TextInput
-              style={styles.input}
-              value={usdValue}
-              keyboardType="numeric"
-              onChangeText={changeUsdValue}
-            />
+          {isCandleChartVisible ? (
+            <CandlestickChart.Provider
+              data={coinCandleChartData.map(
+                ([timestamp, open, high, low, close]) => ({
+                  timestamp,
+                  open,
+                  high,
+                  low,
+                  close,
+                })
+              )}
+            >
+              <CandlestickChart height={screenWidth / 2} width={screenWidth}>
+                <CandlestickChart.Candles />
+                <CandlestickChart.Crosshair>
+                  <CandlestickChart.Tooltip />
+                </CandlestickChart.Crosshair>
+              </CandlestickChart>
+              <View style={styles.candleStickDataContainer}>
+                <View>
+                  <Text style={styles.candleStickTextLabel}>Open</Text>
+                  <CandlestickChart.PriceText
+                    style={styles.candleStickText}
+                    type="open"
+                  />
+                </View>
+                <View>
+                  <Text style={styles.candleStickTextLabel}>High</Text>
+                  <CandlestickChart.PriceText
+                    style={styles.candleStickText}
+                    type="high"
+                  />
+                </View>
+                <View>
+                  <Text style={styles.candleStickTextLabel}>Low</Text>
+                  <CandlestickChart.PriceText
+                    style={styles.candleStickText}
+                    type="low"
+                  />
+                </View>
+                <View>
+                  <Text style={styles.candleStickTextLabel}>Close</Text>
+                  <CandlestickChart.PriceText
+                    style={styles.candleStickText}
+                    type="close"
+                  />
+                </View>
+              </View>
+              <CandlestickChart.DatetimeText
+                style={{ color: "white", fontWeight: "700", margin: 10 }}
+              />
+            </CandlestickChart.Provider>
+          ) : (
+            <LineChart height={screenWidth / 2} width={screenWidth}>
+              <LineChart.Path color={chartColor} />
+              <LineChart.CursorCrosshair color={chartColor} />
+            </LineChart>
+          )}
+
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", flex: 1 }}>
+              <Text style={{ color: "white", alignSelf: "center" }}>
+                {symbol.toUpperCase()}
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={coinValue}
+                keyboardType="numeric"
+                onChangeText={changeCoinValue}
+              />
+            </View>
+
+            <View style={{ flexDirection: "row", flex: 1 }}>
+              <Text style={{ color: "white", alignSelf: "center" }}>USD</Text>
+              <TextInput
+                style={styles.input}
+                value={usdValue}
+                keyboardType="numeric"
+                onChangeText={changeUsdValue}
+              />
+            </View>
           </View>
-        </View>
-      </LineChart.Provider>
+        </LineChart.Provider>
+      </GestureHandlerRootView>
     </View>
   );
 };

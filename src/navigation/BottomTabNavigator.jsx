@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import PortfolioScreen from "../screens/PortfolioScreen";
 import WatchlistScreen from "../screens/WatchlistScreen";
-import LoginScreen from "../screens/LoginScreen"
-import { FontAwesome,Foundation } from "@expo/vector-icons";
+import LoginScreen from "../screens/LoginScreen";
+import { FontAwesome, Foundation } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,12 +28,16 @@ const BottomTabNavigator = () => {
           ),
         }}
       />
-       <Tab.Screen
+      <Tab.Screen
         name="Portfolio"
         component={PortfolioScreen}
         options={{
           tabBarIcon: ({ focused, color }) => (
-            <Foundation name="graph-pie" size={focused ? 30 : 25} color={color} />
+            <Foundation
+              name="graph-pie"
+              size={focused ? 30 : 25}
+              color={color}
+            />
           ),
         }}
       />

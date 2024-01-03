@@ -4,27 +4,43 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
   Image,
+  Alert,
 } from "react-native";
-import firebase from "../../../firebaseConfig"; // Firebase yapılandırma dosyasını içe aktarın
-import { styles } from "./styles"; // Stil dosyasından stilleri içe aktarın
+import { auth } from "../../services/firebase";
+import { useNavigation } from "@react-navigation/native"; // Eklenen kısım
+import { styles } from "./styles";
 
 const Logo = require("../../../assets/ota.png");
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation(); // Navigation hook'u eklenen kısım
 
   const handleSignUp = async () => {
     try {
-      const userCredential = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-      // Kayıt başarılıysa, kullanıcı bilgileri userCredential.user içinde olacak
-      console.log("Kayıt başarılı:", userCredential.user);
+      const userCredential = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      const user = userCredential.user;
+      Alert.alert(
+        "Success",
+        `${email} Your email has been successfully registered.`,
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              navigation.goBack();
+            },
+          },
+        ]
+      );
+      console.log("Successful registration:", user);
     } catch (error) {
-      console.error("Kayıt hatası:", error);
+      console.error("Registration error:", error);
+      Alert.alert("Error", "There was an error during registration: " + error);
     }
   };
 

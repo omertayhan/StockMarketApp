@@ -10,7 +10,6 @@ export const UserScreenStyles = StyleSheet.create({
   logo: {
     width: 200,
     height: 200,
-    marginBottom: 20,
   },
   title: {
     color: "white",
@@ -48,7 +47,24 @@ export const UserScreenStyles = StyleSheet.create({
     marginBottom: 20,
   },
   signUpText: {
-    fontsize: 24,
     color: "white",
+  },
+  email: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  appText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 24,
+  },
+  logoutButton: {
+    backgroundColor: "#818589",
+    borderRadius: 10,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
   },
 });
