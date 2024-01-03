@@ -67,4 +67,15 @@ export const UserScreenStyles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 20,
   },
+  logoutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  logoutText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 10, // İkon ile metin arasındaki boşluğu belirler
+  },
 });

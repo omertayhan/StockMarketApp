@@ -11,6 +11,7 @@ import { auth } from "../../services/firebase";
 import { useNavigation } from "@react-navigation/native";
 import { UserScreenStyles } from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { MaterialIcons } from "@expo/vector-icons";
 
 const Logo = require("../../../assets/ota.png");
@@ -115,7 +116,10 @@ const UserScreen = () => {
           onPress={handleLogout}
           style={UserScreenStyles.logoutButton}
         >
-          <MaterialIcons name="logout" size={30} color="white" />
+          <View style={UserScreenStyles.logoutContainer}>
+            <MaterialIcons name="logout" size={30} color="white" />
+            <Text style={UserScreenStyles.logoutText}>Sign Out</Text>
+          </View>
         </TouchableOpacity>
       </View>
     );
