@@ -38,9 +38,7 @@ Stock Market App provides users with significant convenience in tracking crypto 
 
 - **Flatlist Usage:** Loading continues as the user reaches every 50+1 data.
 
-- **Authentication Usage:** `src/LoginScreen/index.jsx` contains visuals related to Firebase Authentication.
-
-## Recoil Usage
+- **Recoil Usage:**
 For tracking crypto portfolios, users can follow them in the Portfolio screen by fetching current data from the API with cryptocurrency identifiers stored in local storage (localStorage).
 
 ## Installation and Usage
