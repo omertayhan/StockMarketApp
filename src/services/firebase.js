@@ -4,13 +4,13 @@ import "firebase/compat/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAPU2EcSwFfOuLssHJUMIA9rCiTEA1Oiko",
-    authDomain: "stock-market-app-auth.firebaseapp.com",
-    projectId: "stock-market-app-auth",
-    storageBucket: "stock-market-app-auth.appspot.com",
-    messagingSenderId: "469569718811",
-    appId: "1:469569718811:web:b2481385af93be06a9c6be"
-  };
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "your-auth-domain.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-storage-bucket.appspot.com",
+  messagingSenderId: "your-messaging-sender-id",
+  appId: "your-app-id"
+};
 
 // Initialize Firebase
 let app;
